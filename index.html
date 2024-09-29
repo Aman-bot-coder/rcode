@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator for SparkEv</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrious/dist/qrious.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            margin-top: 20px;
+        }
+        canvas {
+            margin-top: 20px;
+        }
+
+        .mb-35{
+            margin-bottom: 35px;
+        }
+
+        .m-auto
+        {
+            margin: auto;
+        }
+
+        .mt-30{
+            margin-top: 30px;
+        }
+
+        .block{
+            display: block;
+        }
+
+        button:hover{
+            transition: transform  0.2s;
+            transform: scale(1.25);
+        }
+    </style>
+</head>
+<body>
+    <h1 class="mb-35">Generate QR Code for SparkEv App</h1>
+    <!-- Only one URL input -->
+    <input type="text" id="urlInput" placeholder="Please enter the URL" />
+    <button onclick="generateQRCode()" class="m-auto mt-30 block hover-enlarge">Generate QR Code</button>
+    <canvas id="qrcode"></canvas>
+    <a id="downloadLink" style="display: none;" download="qrcode.png">Save QR Code</a>
+    <script>
+        function generateQRCode() {
+            var urlInput = document.getElementById('urlInput').value;
+
+            if (urlInput === "") {
+                document.getElementById("qrcode").style.display = "none";
+                alert("Please enter a valid URL.");
+                return;
+            }
+
+            var qr = new QRious({
+                element: document.getElementById('qrcode'),
+                value: urlInput,
+                size: 250,
+                background: 'white',
+                foreground: 'black'
+            });
+
+            var canvas = document.getElementById('qrcode');
+            var dataURL = canvas.toDataURL('image/png');
+            var downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = dataURL;
+            downloadLink.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
